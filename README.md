@@ -29,9 +29,9 @@ This model has approximately equivalent overestimates and underestimates, but wi
 ## Memory-based Attempts
 After finding that SVD took too much time to be practical, I then tried to fit a memory-based KNNBasic model. This model would have used cosine similarity. I say "would have used" because the model was simply too large to be run in Jupyter Lab.
 
-![Trying](Images/trying_fit.jpeg)
+![Trying](Images/trying_fit.JPG)
 
-![Failing](Images/failing_fit.jpeg)
+![Failing](Images/failing_fit.JPG)
 
 This was a rather major road block to developing the model. After some consideration, I chose to continue using a memory-based model, but instead of creating a full similarity matrix, I would instead code the memory-based K neighbors model from scratch.
 
@@ -69,7 +69,7 @@ This model imputes using 3. It is not much of an improvement over the previous o
 #### The Final Model
 After much experimentation, the following model was created.
 
-[5](Images/Final_Model_PredvAct.jpeg)
+[](Images/Final_Model_PredvAct.jpeg)
 
 This model uses cosine similarity to find the top 0.1% of similar users to the given user. It then filters the dataset as previously explained and imputes missing values with 3. The key difference between this model and the last model from the Gauntlet seen above is that the predictions from this model are then fed through a linear regression. This linear regression uses a show's predicted rating from the KNN memory-based model, the average rating for the show in the database, and the number of ratings for the show in the database to create its predictions. The result is seen above.
 
