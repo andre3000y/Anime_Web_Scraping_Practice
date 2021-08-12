@@ -41,7 +41,7 @@ To create these models, I made a function that takes a username and the dataset 
 
 As a result of this process manually computing predictions one user at a time, the testing set for this model was necessarily small (1000 test points). Creating these predictions took some 5 hours, and the results (in the form of a graph of predictions vs actual ratings) are below.
 
-[Memory-Based](Images/Initial_Model_PredvAct.jpeg)
+![Memory-Based](Images/Initial_Model_PredvAct.jpeg)
 
 This model had an RMSE of 1.63. While this is worse than the SVD, the model runs much faster. To be precise, it takes less than 30 seconds to generate predictions for a given user.
 
@@ -50,26 +50,26 @@ However, this model clearly overestimates some of the worse-rated shows. This ha
 #### The Gauntlet of Failed Models
 The following is a quick look at all the intermediary models that were deemed too imprecise. The code for each of these models is not included in the notebook for this repository due to logistical reasons, but an explanation of each is provided here. Note that most of these models have an RMSE of 3 or greater, meaning that they are far less accurate than the above model.
 
-[1](Images/Initial_Model_PredvAct_2.jpeg)
+![1](Images/Initial_Model_PredvAct_2.jpeg)
 
 This model takes the first model and imputes missing values with 0 instead of the mean. As a result, it tends to vastly underestimate most shows. Also, it occasionally predicts a 0, which is impossible, as the MAL rating system only goes from 1 to 10.
 
-[2](Images/Initial_Model_PredvAct_3.jpeg)
+![2](Images/Initial_Model_PredvAct_3.jpeg)
 
 This model instead imputes using 1. Additionally, it uses far fewer neighbors to avoid underfitting (using the top 0.1% of cosine similarities instead of the top 2.5%). While it no longer gives impossible preditions, it still underestimates shows.
 
-[3](Images/Initial_Model_PredvAct_4.jpeg)
+![3](Images/Initial_Model_PredvAct_4.jpeg)
 
 This model takes the previous model and imputes using 5. While there are fewer underestimations, there are now too many overestimations.
 
-[4](Images/Initial_Model_PredvAct_5.jpeg)
+![4](Images/Initial_Model_PredvAct_5.jpeg)
 
 This model imputes using 3. It is not much of an improvement over the previous one.
 
 #### The Final Model
 After much experimentation, the following model was created.
 
-[](Images/Final_Model_PredvAct.jpeg)
+![Final](Images/Final_Model_PredvAct.jpeg)
 
 This model uses cosine similarity to find the top 0.1% of similar users to the given user. It then filters the dataset as previously explained and imputes missing values with 3. The key difference between this model and the last model from the Gauntlet seen above is that the predictions from this model are then fed through a linear regression. This linear regression uses a show's predicted rating from the KNN memory-based model, the average rating for the show in the database, and the number of ratings for the show in the database to create its predictions. The result is seen above.
 
