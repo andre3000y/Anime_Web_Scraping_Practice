@@ -22,7 +22,7 @@ The above shows the distribution of how many shows each user has rated. As is cl
 ## Initial Model
 The first instinct upon finishing scraping the data was to create a simple SVD. This initial model used 100 factors with an epoch of 100. The resulting predictions had an RMSE of 1.29, and a graph of Predictions vs Actual ratings can be seen below.
 
-![Initial Model](100_epochs_svd.jpeg)
+![Initial Model](Images/100_epochs_svd.jpeg)
 
 This model has approximately equivalent overestimates and underestimates, but with a very wide spread for some of the predictions. With an RMSE of 1.29, its performance appears to be decent on the surface. However, the model takes all of 20+ minutes to fit. This is simply unusable as a result. Each time that one might want to generate predictions for a new user, they would have to refit the SVD, spending another 20 minutes to generate each list of predictions. The impracticality outweighs the relatively good performance of the model.
 
@@ -50,7 +50,7 @@ However, this model clearly overestimates some of the worse-rated shows. This ha
 #### The Gauntlet of Failed Models
 The following is a quick look at all the intermediary models that were deemed too imprecise. The code for each of these models is not included in the notebook for this repository due to logistical reasons, but an explanation of each is provided here. Note that most of these models have an RMSE of 3 or greater, meaning that they are far less accurate than the above model.
 
-[1](Images/Initial_Model_PredvAvt_2.jpeg)
+[1](Images/Initial_Model_PredvAct_2.jpeg)
 
 This model takes the first model and imputes missing values with 0 instead of the mean. As a result, it tends to vastly underestimate most shows. Also, it occasionally predicts a 0, which is impossible, as the MAL rating system only goes from 1 to 10.
 
